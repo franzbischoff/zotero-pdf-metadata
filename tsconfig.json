@@ -4,9 +4,17 @@
     "module": "commonjs",
     "target": "ES2016",
     "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "strict": true
   },
-  "include": ["src", "typings", "node_modules/zotero-types"],
-  "exclude": ["build", "addon"]
+  "include": [
+    "src",
+    "typings",
+    "node_modules/zotero-types"
+  ],
+  "exclude": [
+    "build",
+    "addon"
+  ]
 }
