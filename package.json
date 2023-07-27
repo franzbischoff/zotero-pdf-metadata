@@ -44,6 +44,7 @@
     "zotero-plugin-toolkit": "^2.1.7"
   },
   "devDependencies": {
+    "@tsconfig/recommended": "^1.0.2",
     "@types/node": "^20.4.5",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",

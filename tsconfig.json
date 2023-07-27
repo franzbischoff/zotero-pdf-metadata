@@ -1,20 +1,18 @@
 {
+  "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
+    "importHelpers": true,
+    "allowJs": true,
     "experimentalDecorators": true,
+    "allowUnreachableCode": false,
+    "newLine": "lf",
     "module": "commonjs",
-    "target": "ES2016",
+    "target": "ES2017",
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "strict": true
   },
-  "include": [
-    "src",
-    "typings",
-    "node_modules/zotero-types"
-  ],
-  "exclude": [
-    "build",
-    "addon"
-  ]
+  "include": ["src", "typings", "node_modules/zotero-types"],
+  "exclude": ["build", "addon", "node_modules"]
 }
