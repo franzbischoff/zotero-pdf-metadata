@@ -1,5 +1,11 @@
 import { config } from "../../package.json";
 import { getString } from "../utils/locale";
+import { PDFDocument } from "pdf-lib";
+import ZoteroToolkit from "zotero-plugin-toolkit";
+// import Addon from "../addon";
+// import { UITool } from "zotero-plugin-toolkit/dist/tools/ui";
+// import { BasicTool } from "zotero-plugin-toolkit/dist/basic";
+import { Buffer } from "buffer/";
 
 function example(
   target: any,
@@ -19,6 +25,34 @@ function example(
   return descriptor;
 }
 
+// function encodeToAscii(str: string): string {
+//   return str.split('').map(character => {
+//     if (character.charCodeAt(0) < 128) {
+//       return character;
+//     } else {
+//       return character.charAt(0);
+//     }
+//   }).join('');
+// }
+
+// function toArrayBuffer(buffer: Buffer) {
+//   const arrayBuffer = new ArrayBuffer(buffer.length);
+//   const view = new Uint8Array(arrayBuffer);
+//   for (let i = 0; i < buffer.length; ++i) {
+//     view[i] = buffer[i];
+//   }
+//   return arrayBuffer;
+// }
+
+// function strtoArrayBuffer(str: string) {
+//   const arrayBuffer = new ArrayBuffer(str.length);
+//   const view = new Uint8Array(arrayBuffer);
+//   for (let i = 0; i < str.length; ++i) {
+//     view[i] = str.charCodeAt(i);
+//   }
+//   return arrayBuffer;
+// }
+
 export class BasicExampleFactory {
   @example
   static registerNotifier() {
@@ -37,11 +71,11 @@ export class BasicExampleFactory {
       },
     };
 
+    // _PreviousData
     // Register the callback in Zotero as an item observer
     const notifierID = Zotero.Notifier.registerObserver(callback, [
       "tab",
       "item",
-      "file",
     ]);
 
     // Unregister callback when the window closes (important to avoid a memory leak)
@@ -52,6 +86,66 @@ export class BasicExampleFactory {
       },
       false,
     );
+  }
+
+  @example
+  static async metadataNotifierCallback(ids: number[] | string[]) {
+    // iterate over all ids and retrieve the added/modified items as Item objects
+    // Retrieve the added/modified items as Item objects
+    const items = Zotero.Items.get(ids);
+
+    // Iterate over all items
+    for (const item of items) {
+
+      // Skip if there is no PDF attachment
+      if (item.numPDFAttachments() == 0) {
+        continue;
+      }
+
+      let att: Zotero.Item | undefined;
+      // Iterate over all attachments and stop at the first PDF attachment
+      for (const attn of item.getAttachments(false)) {
+        att = Zotero.Items.get(attn);
+        if (att.attachmentContentType === "application/pdf") {
+          break;
+        }
+      }
+
+      // If there is PDF attachment
+      let pdfBytes: Uint8Array | undefined;
+      let path: string | undefined;
+      if (att) {
+        // Get the file path
+        path = (await att.getFilePathAsync()) as string;
+        // Get the file data
+        const data = await Zotero.File.getBinaryContentsAsync(path);
+        // Convert the data to a Buffer. Use the encoding 'ascii' to avoid errors
+        const buf = Buffer.from(data, "ascii");
+        // Load the PDF document
+        const pdfDoc = await PDFDocument.load(buf, {
+          updateMetadata: true,
+        });
+
+        // Get the title
+        const title = item.getField("title") as string;
+        pdfDoc.setTitle(title);
+
+        // Get first Author
+        const author = item.getField("firstCreator") as string;
+        pdfDoc.setAuthor(author);
+
+        pdfBytes = await pdfDoc.save();
+
+      }
+
+      if (pdfBytes) {
+        const pdfblob = new Blob([pdfBytes]);
+
+        if (path) {
+          await Zotero.File.putContentsAsync(path, pdfblob);
+        }
+      }
+    }
   }
 
   @example

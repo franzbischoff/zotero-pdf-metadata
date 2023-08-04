@@ -70,5 +70,13 @@ if (existsSync(profilePath)) {
 
 const startZotero = `"${zoteroBinPath}" --debugger --purgecaches -profile "${profilePath}"`;
 
-execSync(startZotero);
+try {
+  execSync(startZotero, {
+    maxBuffer: 1024 * 1024,
+  });
+} catch (error) {
+  console.error(error);
+  console.error("end");
+}
+
 exit(0);

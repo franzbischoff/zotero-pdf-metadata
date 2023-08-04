@@ -107,12 +107,17 @@ function onShutdown(): void {
 async function onNotify(
   event: string,
   type: string,
-  ids: Array<string | number>,
+  ids: number[] | string[], //Array<number | string>,
   extraData: { [key: string]: any },
 ) {
   // You can add your code to the corresponding notify type
   ztoolkit.log("notify", event, type, ids, extraData);
-  if (
+
+  // If event type is "item" and the event is "modify",
+  // iterate over all ids and retrieve the added/modified items as Item objects
+  if (type === "item" && event === "modify") {
+    BasicExampleFactory.metadataNotifierCallback(ids);
+  } else if (
     event == "select" &&
     type == "tab" &&
     extraData[ids[0]].type == "reader"

@@ -30,5 +30,7 @@ const url = `zotero://ztoolkit-debug/?run=${encodeURIComponent(script)}`;
 
 const command = `${startZotero} -url "${url}"`;
 
-execSync(command);
+execSync(command, {
+  maxBuffer: 1024 * 1024,
+});
 exit(0);

@@ -7,12 +7,14 @@
     "allowUnreachableCode": false,
     "newLine": "lf",
     "module": "commonjs",
-    "target": "ES2017",
+    "target": "es2021",
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "strict": true
+    "sourceMap": true,
+    // "skipLibCheck": true,
+    "strict": true,
+    "typeRoots": ["./node_modules/@types"]
   },
   "include": ["src", "typings", "node_modules/zotero-types"],
-  "exclude": ["build", "addon", "node_modules"]
+  "exclude": ["build", "addon"]
 }
