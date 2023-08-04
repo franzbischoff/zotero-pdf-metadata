@@ -1,0 +1,54 @@
+name: Release Addon
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        type: choice
+        description: Choose release type
+        options:
+          - auto
+          - patch
+          - minor
+          - major
+        default: auto
+      beta:
+        type: boolean
+        description: Prerelease
+        default: false
+      npm:
+        type: boolean
+        description: NPM release
+        default: false
+      git:
+        type: boolean
+        description: Git release
+        default: true
+      dry:
+        type: boolean
+        description: Dry release
+        default: false
+jobs:
+  releaseIt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: git config
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+      - run: npm install --omit=dev
+      - name: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TYPE_ARG: ${{ fromJSON('{"auto":"", "patch":"--patch", "minor":"--minor", "major":"--major"}')[github.event.inputs.type] }}
+          BETA_ARG: ${{ github.event.inputs.beta == 'true' && '--preRelease=beta' || '' }}
+          DRY_ARG: ${{ github.event.inputs.dry == 'true' && '--dry-run' || '' }}
+          NODE_ENV: production
+        run: npm run release -- --ci --verbose $TYPE_ARG $BETA_ARG $DRY_ARG

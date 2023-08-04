@@ -61,10 +61,23 @@ export class BasicExampleFactory {
   static async metadataNotifierCallback(ids: number[] | string[]) {
     // iterate over all ids and retrieve the added/modified items as Item objects
     // Retrieve the added/modified items as Item objects
-    const items = Zotero.Items.get(ids);
+
+    // const s = new Zotero.Search();
+    // s.libraryid = Zotero.Libraries.userLibraryID;
+    // s.addCondition('itemType', 'isNot', 'attachment');
+    // const itemIDs = await s.search();
+    // const items = await Zotero.Items.getAsync(itemIDs);
+
+    // full changes
+    // const idss = await Zotero.Items.getAllIDs(Zotero.Libraries.userLibraryID);
+    // const items = await Zotero.Items.getAsync(idss);
+    const items = await Zotero.Items.getAsync(ids);
 
     // Iterate over all items
     for (const item of items) {
+      if (item.isPDFAttachment()) {
+        continue;
+      }
       // Skip if there is no PDF attachment
       if (item.numPDFAttachments() == 0) {
         continue;
