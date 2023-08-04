@@ -1,6 +1,6 @@
 import { config } from "../../package.json";
 import { getString } from "../utils/locale";
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, EncryptedPDFError } from "pdf-lib";
 
 import { Buffer } from "buffer/";
 
@@ -75,7 +75,7 @@ export class BasicExampleFactory {
 
     // Iterate over all items
     for (const item of items) {
-      if (item.isPDFAttachment()) {
+      if (item.isAttachment()) {
         continue;
       }
       // Skip if there is no PDF attachment
@@ -96,33 +96,52 @@ export class BasicExampleFactory {
       let pdfBytes: Uint8Array | undefined;
       let path: string | undefined;
       if (att) {
-        // Get the file path
-        path = (await att.getFilePathAsync()) as string;
-        // Get the file data
-        const data = await Zotero.File.getBinaryContentsAsync(path);
-        // Convert the data to a Buffer. Use the encoding 'ascii' to avoid errors
-        const buf = Buffer.from(data, "ascii");
-        // Load the PDF document
-        const pdfDoc = await PDFDocument.load(buf, {
-          updateMetadata: true,
-        });
+        let pdfDoc: PDFDocument | undefined;
+        try {
+          // Get the file path
+          path = (await att.getFilePathAsync()) as string;
+          // Get the file data
+          const data = await Zotero.File.getBinaryContentsAsync(path);
+          // Convert the data to a Buffer. Use the encoding 'ascii' to avoid errors
+          const buf = Buffer.from(data, "ascii");
+          // Load the PDF document
 
-        // Get the title
-        const title = item.getField("title") as string;
-        pdfDoc.setTitle(title);
+          pdfDoc = await PDFDocument.load(buf, {
+            updateMetadata: true,
+          });
+        } catch (e) {
+          if (e instanceof EncryptedPDFError) {
+            // The PDF document is encrypted, ignore this one
+            continue;
+          } else {
+            ztoolkit.log(`Error in example `, e);
+            continue;
+          }
+        }
 
-        // Get first Author
-        const author = item.getField("firstCreator") as string;
-        pdfDoc.setAuthor(author);
+        if (pdfDoc != undefined) {
+          try {
+            // Get the title
+            const title = item.getField("title") as string;
+            pdfDoc.setTitle(title);
 
-        pdfBytes = await pdfDoc.save();
-      }
+            // Get first Author
+            const author = item.getField("firstCreator") as string;
+            pdfDoc.setAuthor(author);
 
-      if (pdfBytes) {
-        const pdfblob = new Blob([pdfBytes]);
+            pdfBytes = await pdfDoc.save();
 
-        if (path) {
-          await Zotero.File.putContentsAsync(path, pdfblob);
+            if (pdfBytes) {
+              const pdfblob = new Blob([pdfBytes]);
+
+              if (path) {
+                await Zotero.File.putContentsAsync(path, pdfblob);
+              }
+            }
+          } catch (e) {
+            ztoolkit.log(`Error in example `, e);
+            continue;
+          }
         }
       }
     }
