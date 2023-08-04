@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: 18
           cache: npm
-      - run: npm install --omit=dev
+      - run: npm install
       - name: release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
