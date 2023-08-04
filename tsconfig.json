@@ -10,8 +10,8 @@
     "target": "es2021",
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "sourceMap": true,
-    // "skipLibCheck": true,
+    // "sourceMap": true,
+    "skipLibCheck": true,
     "strict": true,
     "typeRoots": ["./node_modules/@types"]
   },
