@@ -1,6 +1,6 @@
 {
   "name": "zotero-pdf-metadata",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Zotero Addon",
   "config": {
     "addonName": "Zotero Addon",
