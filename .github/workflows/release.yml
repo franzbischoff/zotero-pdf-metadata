@@ -36,7 +36,7 @@ jobs:
           fetch-depth: 0
       - name: git config
         run: |
-          git config user.name "${GITHUB_ACTOR}"
+          git config user.name "984592+${GITHUB_ACTOR}"
           git config user.email "984592+${GITHUB_ACTOR}@users.noreply.github.com"
       - name: Setup node
         uses: actions/setup-node@v3
