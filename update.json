@@ -3,7 +3,7 @@
     "zoteropdfmetadata@gmail.com": {
       "updates": [
         {
-          "version": "0.5.2",
+          "version": "0.5.3",
           "update_link": "https://github.com/franzbischoff/zotero-pdf-metadata/releases/latest/download/zotero-pdf-metadata.xpi",
           "applications": {
             "zotero": {
