@@ -7,19 +7,19 @@
     "push": true,
     "commit": true,
     "tag": true,
-    "requireCommits": true, // require commits since last tag
-    "requireCleanWorkingDir": true // exits if local not upto date with remote or if workdir is unclean
+    "requireCommits": true,
+    "requireCleanWorkingDir": true
   },
   "github": {
-    "release": true, // creates a github release
-    "draft": true, // github releases are only drafted, confirm the draft in github releases page to publish it
-    "commitArgs": ["-S"], // creates gpg signed commits
-    "tagArgs": ["-s"], // creates gpg signed tags
-    "assets": ["build/*.xpi"] // assets to be included in the GitHub releases page
+    "release": true,
+    "draft": true,
+    "commitArgs": ["-S"],
+    "tagArgs": ["-s"],
+    "assets": ["build/*.xpi"]
   },
   "hooks": {
-    "before:init": "npm run lint", // runs lint before publishing
-    "after:bump": "npm run build", // build the package to publish and the generate a tarball for use in github releases
+    "before:init": "npm run lint",
+    "after:bump": "npm run build",
     "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
   }
 }
