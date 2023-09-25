@@ -50,7 +50,7 @@
     "@tsconfig/recommended": "^1.0.2",
     "@types/node": "^20.6.2",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
-    "@typescript-eslint/parser": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.2",
     "chokidar-cli": "^3.0.0",
     "compressing": "^1.10.0",
     "concurrently": "^8.2.1",
