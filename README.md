@@ -5,6 +5,7 @@
 
 Plugins created with this template:
 
+[![GitHub Repo stars](https://img.shields.io/github/stars/franzbischoff/zotero-pdf-metadata?label=zotero-pdf-metadata&style=flat-square)](https://github.com/franzbischoff/zotero-pdf-metadata)
 [![GitHub Repo stars](https://img.shields.io/github/stars/windingwind/zotero-better-notes?label=zotero-better-notes&style=flat-square)](https://github.com/windingwind/zotero-better-notes)
 [![GitHub Repo stars](https://img.shields.io/github/stars/windingwind/zotero-pdf-preview?label=zotero-pdf-preview&style=flat-square)](https://github.com/windingwind/zotero-pdf-preview)
 [![GitHub Repo stars](https://img.shields.io/github/stars/windingwind/zotero-pdf-translate?label=zotero-pdf-translate&style=flat-square)](https://github.com/windingwind/zotero-pdf-translate)
