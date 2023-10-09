@@ -44,7 +44,7 @@
     "@types/react": "^18.2.24",
     "buffer": "^6.0.3",
     "pdf-lib": "^1.17.1",
-    "zotero-plugin-toolkit": "^2.3.7"
+    "zotero-plugin-toolkit": "^2.3.8"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.3",
