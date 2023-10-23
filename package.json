@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/franzbischoff/zotero-pdf-metadata#readme",
   "dependencies": {
-    "@types/react": "^18.2.24",
+    "@types/react": "^18.2.31",
     "buffer": "^6.0.3",
     "pdf-lib": "^1.17.1",
     "zotero-plugin-toolkit": "^2.3.7"
