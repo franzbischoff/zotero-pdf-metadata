@@ -56,7 +56,7 @@
     "concurrently": "^8.2.1",
     "cross-env": "^7.0.3",
     "esbuild": "^0.19.4",
-    "eslint": "^8.50.0",
+    "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "hint": "^2.0.0",
     "prettier": "^3.0.3",
