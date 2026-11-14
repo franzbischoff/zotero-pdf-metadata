@@ -25,9 +25,11 @@ async function waitForZotero() {
       resolve();
     }
 
-    const { Services } = ChromeUtils.import(
-      "resource://gre/modules/Services.jsm",
-    );
+    if (typeof Services == "undefined") {
+      var { Services } = ChromeUtils.import(
+        "resource://gre/modules/Services.jsm",
+      );
+    }
     const windows = Services.wm.getEnumerator("navigator:browser");
     let found = false;
     while (windows.hasMoreElements()) {
