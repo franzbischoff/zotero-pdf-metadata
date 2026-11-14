@@ -24,6 +24,20 @@ async function onMainWindowLoad(win: Window): Promise<void> {
   const _ztoolkit = createZToolkit();
   addon.data.ztoolkit = _ztoolkit;
   _globalThis.ztoolkit = _ztoolkit;
+
+  _ztoolkit.Menu.register("item", {
+    tag: "menuitem",
+    id: `zotero-itemmenu-${config.addonRef}-write-pdf-xml`,
+    label: "Write PDF XML",
+    icon: `chrome://${config.addonRef}/content/icons/favicon@0.5x.png`,
+    commandListener: () => {
+      const items = Zotero.getActiveZoteroPane().getSelectedItems();
+      const ids = items.map((item) => item.id);
+      if (ids.length > 0) {
+        BasicExampleFactory.writePdfXmlCallback(ids);
+      }
+    },
+  });
 }
 
 async function onMainWindowUnload(win: Window): Promise<void> {
@@ -55,7 +69,7 @@ async function onNotify(
   // If event type is "item" and the event is "modify",
   // iterate over all ids and retrieve the added/modified items as Item objects
   if (type === "item" && event === "modify") {
-    BasicExampleFactory.metadataNotifierCallback(ids);
+    BasicExampleFactory.writePdfXmlCallback(ids);
   } else if (
     event == "select" &&
     type == "tab" &&

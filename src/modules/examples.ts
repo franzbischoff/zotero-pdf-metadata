@@ -58,7 +58,7 @@ export class BasicExampleFactory {
   }
 
   @example
-  static async metadataNotifierCallback(ids: number[] | string[]) {
+  static async writePdfXmlCallback(ids: number[] | string[]) {
     // iterate over all ids and retrieve the added/modified items as Item objects
     // Retrieve the added/modified items as Item objects
 
