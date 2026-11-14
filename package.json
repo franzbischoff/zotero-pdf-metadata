@@ -3,11 +3,11 @@
   "version": "0.5.6",
   "description": "Zotero Addon",
   "config": {
-    "addonName": "Zotero Addon",
+    "addonName": "Write PDF XML",
     "addonID": "zoteropdfmetadata@gmail.com",
-    "addonRef": "pdfmetadata",
-    "addonInstance": "PDFMetadata",
-    "prefsPrefix": "extensions.zotero.pdfmetadata",
+    "addonRef": "pdf_xml",
+    "addonInstance": "PDFXml",
+    "prefsPrefix": "extensions.zotero.pdf_xml",
     "releasepage": "https://github.com/franzbischoff/zotero-pdf-metadata/releases/latest/download/zotero-pdf-metadata.xpi",
     "updaterdf": "https://raw.githubusercontent.com/franzbischoff/zotero-pdf-metadata/main/update.json"
   },
